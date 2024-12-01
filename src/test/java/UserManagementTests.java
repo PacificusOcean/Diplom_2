@@ -1,4 +1,5 @@
 import com.github.javafaker.Faker;
+
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import io.restassured.RestAssured;
@@ -20,7 +21,7 @@ public class  UserManagementTests {
 
     private Faker faker;
     private String createdUserToken;
-    private String accessToken;
+
     private final String BASE_URL = "https://stellarburgers.nomoreparties.site";
     private final String REGISTER_ENDPOINT = "/api/auth/register";
     private final String USER_ENDPOINT = "/api/auth/user";
@@ -136,7 +137,7 @@ public class  UserManagementTests {
         Response updateResponse = updateNameWithOutAuthorization(Email, password, NewName);
         validateUnauthorizedResponse(updateResponse);
     }
-// Меняем Email буз авторизации
+    // Меняем Email буз авторизации
     @Test
     @Description("Попытка измененить email без авторизации ")
     public void changeEmailWithOutAuthorization() {
@@ -241,7 +242,7 @@ public class  UserManagementTests {
                 .when()
                 .post(LOGIN_ENDPOINT);
 
-          }
+    }
     @Test// Изменили пароль без авторизации
     @Description("Изменение пароля без авторизации")
     public void updateUserPasswordUnauthenticated() {
@@ -286,8 +287,8 @@ public class  UserManagementTests {
 
     @After
     public void tearDown() {
-        if (accessToken != null && !accessToken.isEmpty()) {
-            deleteUserByToken(accessToken);
+        if (createdUserToken != null && !createdUserToken.isEmpty()) {
+            deleteUserByToken(createdUserToken);
         }
     }
 }

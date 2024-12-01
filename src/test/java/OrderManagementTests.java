@@ -8,10 +8,10 @@ import org.junit.Test;
 import java.util.*;
 
 import static io.restassured.RestAssured.given;
-import static io.restassured.http.ContentType.JSON;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import io.restassured.http.ContentType;
+// удалил лишнее
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 
@@ -20,14 +20,13 @@ public class OrderManagementTests {
     private Faker faker;
     private final String BASE_URL = "https://stellarburgers.nomoreparties.site";
     private final String REGISTER_ENDPOINT = "/api/auth/register";
-    private final String USER_ORDERS_ENDPOINT = "/api/orders";
     private final String LOGIN_ENDPOINT = "/api/auth/login";
     private final String ALL_ORDERS_ENDPOINT = "/api/orders/all";
     private final String INGREDIENTS_ENDPOINT = "/api/ingredients";
     private final String ORDER_ENDPOINT = "/api/orders";
 
     private String accessToken;
-    private String refreshToken;
+
     private String createdUserToken;
     private List<String> ingredientHashes;
 
@@ -82,7 +81,6 @@ public class OrderManagementTests {
         return response;
     }
 
-
     private Response sendAuthorizedPostRequest(String endpoint, Map<String, ?> body) {
         return given()
                 .header("Authorization", createdUserToken)
@@ -98,11 +96,6 @@ public class OrderManagementTests {
                 .post(endpoint);
     }
 
-    @Step("Получаем заказы пользователя")
-    private Response getUserOrders(String token) {
-        return given().header("Authorization", "Bearer " + token).get(USER_ORDERS_ENDPOINT);
-
-    }
 
     @Test
     @Description("Получение заказов  пользователя авторизованного и с ингридиентами")
@@ -262,8 +255,8 @@ public class OrderManagementTests {
 
     @After
     public void tearDown() {
-        if (accessToken != null && !accessToken.isEmpty()) {
-            deleteUserToken(accessToken);
+        if (createdUserToken != null && !createdUserToken.isEmpty()) {
+            deleteUserToken(createdUserToken);
         }
     }
 }

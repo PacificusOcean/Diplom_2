@@ -15,10 +15,6 @@ import pojo.CreateUser;
 
 public class LoginUserTest {
     private Faker faker;
-    private String createdUserToken;
-    private String email;
-    private String password;
-
 
     @Before
     public void setUp() {
